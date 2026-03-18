@@ -1,0 +1,32 @@
+version: "2.0"
+mode: eval
+
+project:
+  name: EvalForge
+  run_name: demo_eval
+  output_dir: outputs
+
+task:
+  name: recognition
+  benchmark: omnidocbench
+  primary_metric: edit_distance
+
+dataset:
+  name: omnidocbench
+  gt_dir: demo_data/gt
+  pred_dir: demo_data/pred
+
+metrics:
+  - name: edit_distance
+  - name: llm_judge
+
+judge:
+  type: mock
+  mock: true
+
+analysis:
+  slice_keys: []
+  top_k_badcases: 5
+
+report:
+  generate_json: true

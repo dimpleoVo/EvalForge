@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  # 评测大脑：负责跑 LLM-as-a-Judge 和出报告
+  eval-master:
+    image: python:3.10-slim
+    volumes:
+      - ./:/app
+      - ./eval_data:/data # 核心：挂载统一数据卷
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+
+  # 模型容器A：例如跑 Mineru
+  model-mineru:
+    image: mineru-official:latest
+    volumes:
+      - ./eval_data:/data # 共享同一个数据卷
+    command: python run_inference.py --input /data/gt --output /data/pred/mineru
+
+  # 模型容器B：其他模型
+  model-other:
+    image: other-llm:latest
+    volumes:
+      - ./eval_data:/data
+    command: ./predict --in /data/gt --out /data/pred/other

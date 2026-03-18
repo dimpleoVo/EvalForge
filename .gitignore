@@ -1,0 +1,33 @@
+cat > .gitignore <<'EOF'
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Env
+.env
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Outputs
+outputs/
+eval_data/runs/
+
+# Vector DB
+chroma_db/
+chroma_db_data/
+
+# Cache / temp
+.cache/
+tmp/
+EOF
